@@ -1,15 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import classes from "./SearchResult.module.css";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import StarIcon from "@material-ui/icons/Star";
 import { useHistory } from "react-router";
-import ItemDataContext from "../../Store/item-dataContext";
 
 function SearchResult({
   id,
   img1,
-  img2,
-  img3,
   seller,
   title,
   description,
@@ -17,22 +14,9 @@ function SearchResult({
   price,
   total,
 }) {
-  const ItemCtx = useContext(ItemDataContext);
   const history = useHistory();
 
   const onClickHandler = () => {
-    ItemCtx.addData({
-      id,
-      img1,
-      img2,
-      img3,
-      seller,
-      title,
-      description,
-      star,
-      price,
-      total,
-    });
     history.push(`/product/${id}`);
   };
 

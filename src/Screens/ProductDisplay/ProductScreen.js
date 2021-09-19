@@ -1,15 +1,43 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./ProductScreen.module.css";
-import ItemDataContext from "../../Store/item-dataContext";
 import StarIcon from "@material-ui/icons/Star";
 import { Button } from "@material-ui/core";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function ProductScreen() {
-  const itemCtx = useContext(ItemDataContext);
-  const [img, setImg] = useState(itemCtx.img1);
+  const [item, setItem] = useState({});
+  const [img, setImg] = useState();
+  const [httpError, setHttpError] = useState();
+  const params = useParams();
+
+  const { id } = params;
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      const response = await axios.get(
+        `https://cloth-rental-app-default-rtdb.firebaseio.com/items/${id}.json`
+      );
+      if (response.statusText === "OK") {
+        setItem(response.data);
+      }
+    };
+    fetchItem().catch((error) => {
+      setHttpError(error);
+    });
+  }, [id]);
+
+  useEffect(() => {
+    setImg(item.img1);
+  }, [item]);
+
+  if (httpError) {
+    return <p>Something went wrong</p>;
+    // console.log(httpError);
+  }
 
   const onClickHander = (event) => {
-    setImg(itemCtx[event.target.id]);
+    setImg(item[event.target.id]);
   };
 
   return (
@@ -18,38 +46,25 @@ function ProductScreen() {
         <img src={`/${img}`} alt="" />
       </div>
       <div className={classes.display__altImg}>
-        <img
-          id="img1"
-          src={`/${itemCtx.img1}`}
-          alt=""
-          onClick={onClickHander}
-        />
-        <img
-          id="img2"
-          src={`/${itemCtx.img2}`}
-          alt=""
-          onClick={onClickHander}
-        />
-        <img
-          id="img3"
-          src={`/${itemCtx.img3}`}
-          alt=""
-          onClick={onClickHander}
-        />
+        <img id="img1" src={`/${item.img1}`} alt="" onClick={onClickHander} />
+        <img id="img2" src={`/${item.img2}`} alt="" onClick={onClickHander} />
+        <img id="img3" src={`/${item.img3}`} alt="" onClick={onClickHander} />
       </div>
       <div className={classes.display__info}>
-        <h1>{itemCtx.title}</h1>
-        <p>{itemCtx.seller}</p>
+        <h1>{item.title}</h1>
+        <p>{item.seller}</p>
         <div className={classes.display__stars}>
           <StarIcon className={classes.display__star} />
           <p>
-            <strong>{itemCtx.star}</strong>
+            <strong>{item.star}</strong>
           </p>
         </div>
-        <h2>{itemCtx.price}</h2>
-        <p>{itemCtx.description}</p>
+        <h2>{item.price}</h2>
+        <p>{item.description}</p>
       </div>
-      <Button variant="contained">Add to Bag</Button>
+      <Button variant="contained" className={classes.display__button}>
+        Add to Bag
+      </Button>
       <Button variant="contained">Rent Now</Button>
     </div>
   );
