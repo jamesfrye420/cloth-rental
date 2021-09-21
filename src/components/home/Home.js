@@ -31,12 +31,12 @@ function Home() {
           description="Explore a variety of outfits from our exclusive men's collection"
         />
         <Card
-          src="https://www.bigbindi.com/media/wysiwyg/home/insidewebad-01.jpg"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtfsS46qed2IFlZfYHJ66SB4wxzRyrPi6XAw&usqp=CAU"
           title="Women's Collection"
           description="Dress up this festive season with our new women's collection"
         />
         <Card
-          src="https://a0.muscache.com/pictures/lombard/MtTemplate-1416414-media_library/original/7100160d-2e39-4ada-a066-c7fc06743365.jpeg"
+          src="https://planetfashion.imgix.net/resources/img/planet_fashion/PF_D_S2_aboutUs.jpg?auto=format"
           title="#do_what_moves_you"
           description="Do what moves you."
         />

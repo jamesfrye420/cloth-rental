@@ -14,7 +14,7 @@
 .card > img {
   object-fit: contain;
   min-width: 300px;
-  min-height: 200px;
+  height: 200px;
   width: 100%;
 }
 
